@@ -1,0 +1,5 @@
+.env
+agent.env
+server.env
+.idea/
+__pycache__/

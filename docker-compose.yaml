@@ -22,11 +22,19 @@ services:
       - agent.env
     depends_on:
       - server
+    develop:
+      watch:
+        - action: rebuild
+          path: ./telegram_agent
 
   server:
     build: ./server
     image: server:latest
     restart: unless-stopped
+    develop:
+      watch:
+        - action: rebuild
+          path: ./server
     ports:
       - "8080:8080"
     env_file:
@@ -41,6 +49,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
 
 volumes:
   db_data:

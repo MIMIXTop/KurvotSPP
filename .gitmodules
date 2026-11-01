@@ -1,0 +1,6 @@
+[submodule "telegram_agent"]
+	path = telegram_agent
+	url = https://github.com/MIMIXTop/AntyCopyRightAgent.git
+[submodule "server"]
+	path = server
+	url = https://github.com/MIMIXTop/KurvotServer.git

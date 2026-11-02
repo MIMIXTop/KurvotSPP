@@ -14,10 +14,15 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - app_net
 
   agent:
     build: ./telegram_agent
+    container_name: agent
     image: agent:latest
+    networks:
+      - app_net
     env_file:
       - agent.env
     depends_on:
@@ -29,8 +34,12 @@ services:
 
   server:
     build: ./server
+    container_name: server
     image: server:latest
     restart: unless-stopped
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     develop:
       watch:
         - action: rebuild
@@ -45,7 +54,8 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
-
+    networks:
+      - app_net
     depends_on:
       db:
         condition: service_healthy
@@ -53,3 +63,6 @@ services:
 
 volumes:
   db_data:
+
+networks:
+  app_net:
